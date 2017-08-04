@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}
+    All Food Truck
+{% endblock title %}    
+
+{% block content %}
+    <div class="col-md-10 col-md-offset-1">
+        <!-- <table border="1">
+            <thead>
+                <tr>
+                {% for column in columns %}
+                    <th>{{column}}</th>
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in list %}
+                <tr>
+                    <td>{{ data.id }}</td>
+                    <td><a href="#">{{ data.name }}</a></td>
+                    <td>{{ data.website }}</td>
+                    <td>{{ data.user }}</td>
+                    <td>{{ data.contact_no }}</td>
+                    <td>{{ data.emails }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> -->
+        <div>
+            <h2>All the Truck list</h2>
+            {% if truck_list %}
+            <ul>
+                {% for truck in truck_list %}
+                <li>
+                    {{ truck }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
