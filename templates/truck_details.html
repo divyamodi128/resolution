@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}
+    Food Truck Details
+{% endblock title %}    
+
+{% block content %}
+    <div class="col-md-10 col-md-offset-1">
+        <h2 class="blog-title">{{ truckObj.name }}</h2>
+        <p class="blog-description">{{ truckObj.description }}</p>
+        <p>{{ truckObj.website }}</p>
+        <p>{{ truckObj.contact_no }}</p>
+        <p>{{ truckObj.emails }}</p>
+    </div>
+{% endblock %}

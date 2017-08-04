@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>{% block title %}Django My App{% endblock title %}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
@@ -12,9 +12,9 @@
         <div class='container'>
             <div class="row">
                 <h1 class="blog-title">
-                    {% block title %}
+                    {% block page-title %}
                         Django My App
-                    {% endblock title %}</h1>
+                    {% endblock page-title %}</h1>
                 <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
                 {% block content %}
                     <h3><label>This is the Base templates</label></h3>
