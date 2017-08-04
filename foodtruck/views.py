@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.views import View
 from django.views.generic.list import ListView
-from django.views.generic.edit import FormView, CreateView
+from django.views.generic.edit import FormView, CreateView, UpdateView
+from django.views.generic import DetailView
+from django.http import HttpResponseForbidden
 
 from .models import Truck
 from .forms import TruckForm
@@ -17,9 +19,8 @@ class TruckListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TruckListView, self).get_context_data(**kwargs)
-        # import pdb ; pdb.set_trace()
-        # context['form'] = TruckForm()
         return context
+
 
 class CreateTruckView(CreateView):
     model = Truck
@@ -29,42 +30,73 @@ class CreateTruckView(CreateView):
     # initial= {'user': self.request.user.id}
 
     def get_initial(self):
+        import pdb ; pdb.set_trace()
+        if not self.request.user.is_authenticated:
+            return HttpResponseForbidden()
         return {'user': self.request.user.id}
 
     def get_context_data(self, **kwargs):
-        import pdb ; pdb.set_trace()
         context = super(CreateTruckView, self).get_context_data(**kwargs)
-        # context['form']['user'] = self.get_initial()
         return context
 
     def form_valid(self, form, **kwargs):
-        import pdb ; pdb.set_trace()
-        # form.data['user'] = self.get_initial()
         return super(CreateTruckView, self).form_valid(form, **kwargs)
 
-class TruckformView(View):
-    form_class = TruckForm
-    # initial: {'user': request.user}
-
-    def get(self, request, *args, **kwargs):
-        form = self.form_class
-        return form
-
-    def post(self, request, *args, **kwargs):
-        return form
-
-
+# Not Used yet
 class TruckFormView(FormView):
-    template_name = 'contact.html'
+    template_name = 'truck_create.html'
     form_class = TruckForm
-    success_url = '/thanks/'
+    success_url = '/truck/list/'
 
-    def form_valid(self, form, pk=None):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        if pk:
-            instance
-        return super(ContactView, self).form_valid(form)
+    def get_initial(self):
+        import pdb ; pdb.set_trace()
+        if not self.request.user.is_authenticated:
+            return HttpResponseForbidden()
+        return {'user': self.request.user.id}
+
+
+class TruckDetailView(DetailView):
+    model = Truck
+    form_class = TruckForm
+    template_name = 'truck_details.html'
+    context_object_name = 'truckObj'
+    # # def get_success_url(self):
+    # #     return reverse('truck-detials', kwargs={'pk': self.object.pk})
+    # # initial= {'user': self.request.user.id}
+    def get_context_data(self, **kwargs):
+        # import pdb ; pdb.set_trace()
+        context = super(TruckDetailView, self).get_context_data(**kwargs)
+        return context
+    # def get_initial(self):
+    #     import pdb ; pdb.set_trace()
+    #     if not self.request.user.is_authenticated:
+    #         return HttpResponseForbidden()
+    #     return {'user': self.request.user.id}
+
+
+# class TruckformView(View):
+#     form_class = TruckForm
+#     # initial: {'user': request.user}
+
+#     def get(self, request, *args, **kwargs):
+#         form = self.form_class
+#         return form
+
+#     def post(self, request, *args, **kwargs):
+#         return form
+
+
+# class TruckFormView(FormView):
+#     template_name = 'contact.html'
+#     form_class = TruckForm
+#     success_url = '/thanks/'
+
+#     def form_valid(self, form, pk=None):
+#         # This method is called when valid form data has been POSTed.
+#         # It should return an HttpResponse.
+#         if pk:
+#             instance
+#         return super(ContactView, self).form_valid(form)
 
 
 def getLists(TruckListView):

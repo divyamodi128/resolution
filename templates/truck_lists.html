@@ -32,7 +32,7 @@
             <ul>
                 {% for truck in truck_list %}
                 <li>
-                    {{ truck }}
+                    <a href="/truck/details/{{truck.id}}">{{ truck }}</a>
                 </li>
                 {% endfor %}
             </ul>
