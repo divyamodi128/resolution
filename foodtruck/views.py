@@ -3,16 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.views import View
 from django.views.generic.list import ListView
-from django.views.generic.edit import FormView, CreateView, UpdateView
+from django.views.generic.edit import FormView, BaseFormView, CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateResponseMixin
-from django.http import HttpResponseForbidden
+from django.urls import reverse_lazy
 
 from .models import Truck
 from .forms import TruckForm
 
 # Create your views here.
-class TruckListView(ListView):
+class ListTruckView(ListView):
     '''
     Get the List of all the Truck
     '''
@@ -22,16 +22,45 @@ class TruckListView(ListView):
     # form = TruckForm
 
     def get_context_data(self, **kwargs):
-        context = super(TruckListView, self).get_context_data(**kwargs)
+        context = super(ListTruckView, self).get_context_data(**kwargs)
         return context
 
 
-class CreateTruckView(CreateView):
+class BaseTruckForm(BaseFormView):
+    model = Truck
+    form_class = TruckForm
+
+    def get_initial(self):
+        if not self.request.user.is_authenticated:
+            return {'user': None}
+        return {'user': self.request.user.id}
+
+    def get_context_data(self, **kwargs):
+        context = super(BaseTruckForm, self).get_context_data(**kwargs)
+        # import pdb ; pdb.set_trace()
+        return context
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        print("Valid Forms")
+        return super(BaseTruckForm, self).form_valid(form)
+        # return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        print("Invalid Form")
+        if not self.request.user.id:
+            form.errors['user'] = ['Not Autheticated, You need to Login First!']
+        # import pdb ; pdb.set_trace()
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class CreateTruckView(BaseTruckForm, CreateView):
     '''
     User can register their truck with a short descriptions
     '''
-    model = Truck
-    form_class = TruckForm
+    # model = Truck
+    # form_class = TruckForm
     template_name = 'truck_create.html'
     success_url = '/truck/list/'
     # initial= {'user': self.request.user.id}
@@ -43,32 +72,21 @@ class CreateTruckView(CreateView):
         #         return 'message.html'
         return super(CreateTruckView, self).get_template_names()
 
-    def get_initial(self):
-        if not self.request.user.is_authenticated:
-            return {'user': None}
-        return {'user': self.request.user.id}
+class UpdateTruckView(BaseTruckForm, UpdateView):
+    # model = Truck
+    # queryset = Truck.objects.all()
+    # fields = ['name']
+    template_name = 'truck_update.html'
+    success_url = '/truck/list/'
 
-    def get_context_data(self, **kwargs):
-        context = super(CreateTruckView, self).get_context_data(**kwargs)
-        # import pdb ; pdb.set_trace()
-        return context
 
-    def form_valid(self, form):
-        """If the form is valid, redirect to the supplied URL."""
-        print("Valid Forms")
-        return super(CreateView, self).form_valid(form)
-        # return HttpResponseRedirect(self.get_success_url())
-
-    def form_invalid(self, form):
-        """If the form is invalid, render the invalid form."""
-        print("Invalid Form")
-        if not self.request.user.id:
-            form.errors['user'] = ['Not Autheticated, You need to Login First!']
-        # import pdb ; pdb.set_trace()
-        return self.render_to_response(self.get_context_data(form=form))
+class DeleteTruckView(BaseTruckForm, DeleteView):
+    # model = Truck
+    template_name='truck_delete.html'
+    success_url = reverse_lazy('truck-list')
 
 # Not Used yet
-class TruckFormView(FormView):
+class FormTruckView(FormView):
     template_name = 'truck_create.html'
     form_class = TruckForm
     success_url = '/truck/list/'
@@ -80,7 +98,7 @@ class TruckFormView(FormView):
         return {'user': self.request.user.id}
 
 
-class TruckDetailView(DetailView):
+class DetailTruckView(DetailView):
     model = Truck
     form_class = TruckForm
     template_name = 'truck_details.html'
@@ -90,7 +108,7 @@ class TruckDetailView(DetailView):
     # # initial= {'user': self.request.user.id}
     def get_context_data(self, **kwargs):
         # import pdb ; pdb.set_trace()
-        context = super(TruckDetailView, self).get_context_data(**kwargs)
+        context = super(DetailTruckView, self).get_context_data(**kwargs)
         return context
     # def get_initial(self):
     #     import pdb ; pdb.set_trace()
