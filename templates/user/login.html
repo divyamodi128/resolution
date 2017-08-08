@@ -1,15 +1,17 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 {% block title %}
-    Food Truck Details
+    User Login Page
 {% endblock title %}    
 
 {% block content %}
     <div class="col-md-10 col-md-offset-1">
-        <form action="/truck/create/" method="post">
+        <form method="post">
             {% csrf_token %}
                 {{form.as_p}}
             <input type="submit" value="Login" />
             <input type="reset" value="Reset" />
         </form>
+        <p><a href="/signup/">Register here</a></p>
+        <p><a href="/password_reset/">Forget Password?</a></p>
     </div>
 {% endblock %}
