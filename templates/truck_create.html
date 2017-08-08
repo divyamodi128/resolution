@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="col-md-10 col-md-offset-1">
-        <form action="/truck/create/" method="post">
+        <form action="/truck/create/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
                 {{form.as_p}}
             <input type="submit" value="Submit" />
