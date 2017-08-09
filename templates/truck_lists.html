@@ -28,16 +28,49 @@
         </table> -->
         <div>
             <h2>All the Truck list</h2>
-            {% if truck_list %}
-            <ul>
+            {% comment %} <ul>
                 {% for truck in truck_list %}
                 <li>
-                    <a href="/truck/details/{{truck.id}}">{{ truck }}</a>
+                    <a href="/truck/details/{{truck.id}}"></a>
                 </li>
                 {% endfor %}
-            </ul>
+            </ul> {% endcomment %}
+            {% if truck_list %}
+            <div class="list-group">
+                <label class="list-group-item">
+                    <div class="col-xs-1">
+                        ID
+                    </div>
+                    <div class="col-md-3">
+                        Name
+                    </div>
+                    <div class="col-md-2">
+                        Created by
+                    </div>
+                    <div class="col-md-3">
+                        Site
+                    </div>
+                        Contact No
+                </label>
+                {% for truck in truck_list %}
+                <a href="/truck/details/{{truck.id}}" role="button" class="list-group-item">
+                    <div class="col-xs-1">
+                        {{ truck.id }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ truck }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ truck.user.first_name }}&nbsp;{{ truck.user.last_name }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ truck.website }}
+                    </div>
+                        {{ truck.contact_no }}
+                </a>
+                {% endfor %}
+            </div>
             {% endif %}
-            <h4><label>Add Your Truck <a href="\truck\create\">Here</a></label></h4>
         </div>
     </div>
 {% endblock content %}

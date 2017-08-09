@@ -6,15 +6,42 @@
 {% block content %}
     <div class="col-md-10 col-md-offset-1">
         <h2 class="blog-title">{{ truckObj.name }}</h2>
-        {% if truckObj.image %}
-            <p><img src="/media/{{ truckObj.image }}" alt="#" style="width:304px;height:228px;"></p>
-            {% comment %} {{ MEDIA_URL }}{{ truckObj.image }} {% endcomment %}
-        {% endif %}
-        <p class="blog-description">{{ truckObj.description }}</p>
-        <p>{{ truckObj.website }}</p>
-        <p>{{ truckObj.contact_no }}</p>
-        <p>{{ truckObj.emails }}</p>
-        <p><a href="/truck/edit/{{truckObj.id}}">Update</a></p>
-        <p><a href="/truck/delete/{{truckObj.id}}/">Delete</a></p>
+        <div class="row">   
+            <div class="col-xs-6">
+                <p>
+                    <small><label>Contact No:&nbsp;</label>
+                    <a href="#">{{ truckObj.contact_no }}</a></small>
+                </p>
+                <p>
+                    <small><label>Emails:&nbsp;</label>
+                    <a href="#">{{ truckObj.emails }}</a></small>
+                </p>
+                <p>
+                    <small><label>Website:&nbsp;</label>
+                    <a href="#">{{ truckObj.website }}</a></small>
+                </p>
+                <p>
+                    <small><label>Creater:&nbsp;</label>
+                    <a href="#">{{ truckObj.user.first_name }} {{ truckObj.user.last_name }}</a></small>
+                    <p><small><label>Creater Emails:&nbsp;</label>{{truckObj.user.email}}</p></small>
+                </p>
+            </div>
+            <div class="col-xs-6">
+                {% if truckObj.image %}
+                    <p><img src="/media/{{ truckObj.image }}" alt="#" style="width:304px;height:228px;"></p>
+                    {% comment %} {{ MEDIA_URL }}{{ truckObj.image }} {% endcomment %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <label>Descriptions:&nbsp;</label>
+                <spam class="blog-description">{{ truckObj.description }}</spam>
+            </div>
+        </div>
+        <p>
+            <a class="btn btn-primary" href="/truck/edit/{{truckObj.id}}" role="button">Update</a>
+            <a class="btn btn-warning" href="/truck/delete/{{truckObj.id}}/" role="button">Delete</a>
+        </p>
     </div>
 {% endblock %}
