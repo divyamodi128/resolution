@@ -4,22 +4,132 @@
         <title>{% block title %}Django My App{% endblock title %}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
             crossorigin="anonymous">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" 
+            crossorigin="anonymous">
+        <!-- Jquery requirements for bootstrap js -->
+        <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+            crossorigin="anonymous"></script>
     </head>
     <body>
         <div class='container'>
             <div class="row">
-                <h1 class="blog-title">
-                    {% block page-title %}
-                        Django My App
-                    {% endblock page-title %}</h1>
-                <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
+<input type="hidden" name="id" value="{{request.user.id}}" id="id">
+    <nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+            <a class="navbar-brand" href="/truck/list/">Django App</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            {% comment %} <li class="active"><a href="/truck/list/">List <span class="sr-only">(current)</span></a></li>{% endcomment %}
+            <li><a href="/truck/list/">List </a></li>
+            <li><a href="/truck/create/">Create</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">One more separated link</a></li>
+            </ul>
+            </li>
+        </ul>
+         <form class="navbar-form navbar-left">
+            <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form> 
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="/account/profile/">Profile</a></li>
+            <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+                aria-haspopup="true" aria-expanded="false" title="Login/Register">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/truck/list/">List</a></li>
+                    <li><a href="/account/myaccount">My Account</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="/login/" id="login" style="display: none;">Login</a></li>
+                    <li><a href="/logout/" id="logout" style="display: none;">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    </nav>
+
+                {% comment %} <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                        <h1 class="blog-title">
+                        {% block page-title %}
+                            <a href="/truck/list/">Django My App</a>
+                        {% endblock page-title %}</h1>
+                    </div>
+                    <div class="col-xs-6 col-md-4 btn-group">
+                        <!-- Split button -->
+                        <button type="button" class="btn btn-default">List</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
+                            aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/truck/list/">List</a></li>
+                            <li><a href="/account/myaccount">My Account</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/login/" id="login" style="display: none;">Login</a></li>
+                            <li><a href="/logout/" id="logout" style="display: none;">Logout</a></li>
+                        </ul>
+                    </div>
+                </div> {% endcomment %}
+                {% comment %} 
+                    <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p> 
+                {% endcomment %}
                 {% block content %}
                     <h3><label>This is the Base templates</label></h3>
                 {% endblock content %}
             </div>
         </div>
+        <script language="javascript">
+            window.onload = function() {
+                var id = document.getElementById('id');
+                var login = document.getElementById('login');
+                var logout = document.getElementById('logout');
+                // alert(id.value)
+                if (id.value == 'None') {
+                    login.style.display = 'block';
+                } else {
+                    logout.style.display = 'block';
+                }
+            }
+        </script>
     </body>
 </html>

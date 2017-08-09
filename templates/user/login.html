@@ -7,11 +7,31 @@
     <div class="col-md-10 col-md-offset-1">
         <form method="post">
             {% csrf_token %}
-                {{form.as_p}}
-            <input type="submit" value="Login" />
-            <input type="reset" value="Reset" />
+            {% for field in form %}
+            <p>
+                <div class="row">
+                    <div class="col-md-2">{{ field.label_tag }}</div>
+                    <div class="col-md-10">{{ field }}
+                    <br>
+                    {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </div>
+                </div>
+            </p>
+            {% endfor %}
+            <div class="row">
+                {% comment %} <div class="col-md-2"><input type="reset" class="btn btn-primary" value="Reset" /></div> {% endcomment %}
+                <div class="col-md-2 col-md-offset-2"><input type="submit" class="btn btn-primary form-control" value="Login" /></div>
+            </div>
         </form>
-        <p><a href="/signup/">Register here</a></p>
-        <p><a href="/password_reset/">Forget Password?</a></p>
+        <br>
+        <div class="row">
+            <div class="col-md-2"><a href="/signup/" class="btn btn-default form-control" role="button">Register here</a></div>
+            <div class="col-md-3"><a href="/password_reset/" class="btn btn-default form-control" role="button">Forget Password?</a></div>
+        </div>
     </div>
 {% endblock %}

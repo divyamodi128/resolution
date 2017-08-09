@@ -17,7 +17,9 @@ class TruckForm(forms.ModelForm):
             self.fields[field].help_text = None
             if help_text != '':
                 # Assigns the Help Text as a PlaceHolder
-                self.fields[field].widget.attrs.update({'placeholder':help_text})
+                self.fields[field].widget.attrs.update({'placeholder':help_text, 'class':'form-control'})
+            else:
+                self.fields[field].widget.attrs.update({'class':'form-control'})
 
     # name = forms.CharField(max_length=150)
     # website = forms.CharField(widget=forms.URLInput, max_length=250, required=False)
