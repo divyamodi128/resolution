@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': '/truck/list/'}, name='logout'),
     # Account Setup urls
     url(r'^signup/$', core_views.signup, name='signup'),
+    url(r'^account/edit/(?P<pk>[0-9]+)/$', core_views.update, name='update'),
+    url(r'^account/(?P<pk>[0-9]+)/$', core_views.UserDetailView.as_view(), name='detail'),
     url(r'^account_activation_sent/$', core_views.account_activation_sent, name='account_activation_sent'),
     url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         core_views.activate, name='activate'),
