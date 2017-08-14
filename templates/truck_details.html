@@ -28,8 +28,11 @@
             </div>
             <div class="col-xs-6">
                 {% if truckObj.image %}
-                    <p><img src="/media/{{ truckObj.image }}" alt="#" style="width:304px;height:228px;"></p>
+                    {% load static %}
+                    <p><img src="{% get_media_prefix %}{{ truckObj.image }}" alt="#" style="width:304px;height:228px;"></p>
                     {% comment %} {{ MEDIA_URL }}{{ truckObj.image }} {% endcomment %}
+                {% else %}
+                    <p><img src="{% get_media_prefix %}/Truck-Images/Default.jpg" alt="#" style="width:304px;height:228px;"></p>
                 {% endif %}
             </div>
         </div>

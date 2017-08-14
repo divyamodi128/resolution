@@ -107,6 +107,10 @@ class UserDetailView(DetailView):
         return context
 
 def update(request, pk, template_name='user/updates.html'):
+    import pdb ; pdb.set_trace()
+    if request.user.pk is not pk:
+        from django.http import HttpResponseNotFound
+        return HttpResponseNotFound('<h1>Page not found</h1>')
     if request.method == 'POST':
         userform = SignUpForm(request.POST or None, request.FILES, instance=request.user)
         profileform = ProfileForm(request.POST or None, request.FILES, instance=request.user.profile)

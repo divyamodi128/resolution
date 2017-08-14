@@ -79,6 +79,16 @@ class UpdateTruckView(BaseTruckForm, UpdateView):
     template_name = 'truck_update.html'
     success_url = '/truck/list/'
 
+    def get_object(self, queryset=None):
+        obj = super(UpdateTruckView, self).get_object(queryset)
+        if obj.user == self.request.user:
+            pass
+        else:
+            raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': queryset.model._meta.verbose_name})
+        import pdb ; pdb.set_trace()
+        return obj
+
 
 class DeleteTruckView(BaseTruckForm, DeleteView):
     # model = Truck
