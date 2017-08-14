@@ -5,5 +5,42 @@
 
 {% block content %}
     <div class="col-md-10 col-md-offset-1">
+        <h2 class="blog-title">{{ userObj.username }} Details</h2>
+        <div class="row">   
+            <div class="col-xs-6">
+                <p>
+                    <label>Username:&nbsp;</label>
+                    {{ userObj.username }}
+                </p>
+                <p>
+                    <label>Emails:&nbsp;</label>
+                    {{ userObj.email }}
+                </p>
+                <p>
+                    <label>Name:&nbsp;</label>
+                    {{ userObj.first_name }} {{ userObj.last_name }}
+                </p>
+                <p><label>Gender:&nbsp;</label>{{userObj.profile.gender}}</p>
+                <p><label>Attribute:&nbsp;</label>{{userObj.profile.attribute}}</p>
+                <p><label>DOB:&nbsp;</label>{{userObj.profile.birth_date}}</p>
+                <p><label>Bio:&nbsp;</label>{{userObj.profile.bio}}</p>
+                <p><label>Located:&nbsp;</label>{{userObj.profile.location}}</p>                
+                <p><label>Email Conformation:&nbsp;</label>{{userObj.profile.email_confirmed}}</p>                
+            </div>
+            <div class="col-xs-6">
+                {% if userObj.profile.image %}
+                    <p><img src="/media/{{ userObj.profile.image }}" alt="#" style="width:304px;height:228px;"></p>
+                    {% comment %} {{ MEDIA_URL }}{{ userObj.image }} {% endcomment %}
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <a class="btn btn-primary" href="/account/edit/{{userObj.id}}" role="button">Update</a>
+                <a class="btn btn-warning" href="/account/delete/{{userObj.id}}/" role="button">Delete</a>
+            </div>
+        </div>
+        <p>
+        </p>
     </div>
 {% endblock %}
