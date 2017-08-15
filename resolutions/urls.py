@@ -23,7 +23,7 @@ from core import views as core_views
 
 
 urlpatterns = [
-    url(r'^/$', admin.site.urls),
+    url(r'^$', admin.site.urls),
     url(r'^admin/', admin.site.urls),
     # Account urls
     url(r'^login/$', auth_views.login, {'template_name': 'user/login.html'}, name='signin'),
