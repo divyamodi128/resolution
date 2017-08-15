@@ -11,3 +11,4 @@ olefile==0.44
 Pillow==4.2.1
 pytz==2017.2
 smmap2==2.0.3
+whitenoise==3.3.0
