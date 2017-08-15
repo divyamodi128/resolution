@@ -1,6 +1,6 @@
-from settings import base
+from . import base
 
 try:
-    from settings import local_settings
+    from . import local_settings
 except:
     pass
