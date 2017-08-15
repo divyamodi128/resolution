@@ -15,8 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# only in base setting file
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -125,6 +123,8 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/truck/list/'
 
+# only in base setting file
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Only in base settings file
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
