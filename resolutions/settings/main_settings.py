@@ -84,6 +84,10 @@ DATABASES = {
     }
 }
 
+# Add only in main settings file
+import dj_database_url
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -123,17 +127,13 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/truck/list/'
 
-# only in base setting file
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# Only in main settings file
 
-# Only in base settings file
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
-# Only in base settings file
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-# Only in base settings file
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
