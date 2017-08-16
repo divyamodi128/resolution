@@ -107,8 +107,8 @@ class UserDetailView(DetailView):
         return context
 
 def update(request, pk, template_name='user/updates.html'):
-    # import pdb ; pdb.set_trace()
-    if request.user.pk is not pk:
+    import pdb ; pdb.set_trace()
+    if int(request.user.pk) is not int(pk):
         from django.http import HttpResponseNotFound
         return HttpResponseNotFound('<h1>Page not found</h1>')
     if request.method == 'POST':
