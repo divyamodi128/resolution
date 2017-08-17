@@ -32,8 +32,8 @@ class BaseTruckForm(BaseFormView):
 
     def get_initial(self):
         if not self.request.user.is_authenticated:
-            return {'user': None}
-        return {'user': self.request.user.id}
+            return None
+        return {'user': self.request.user}
 
     def get_context_data(self, **kwargs):
         context = super(BaseTruckForm, self).get_context_data(**kwargs)
