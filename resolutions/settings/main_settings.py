@@ -72,7 +72,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'resolutions.wsgi.application'
 
 # During Development only
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -124,6 +124,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+
+# SendGrid Credintials
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = '/truck/list/'
 
