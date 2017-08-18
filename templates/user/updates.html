@@ -11,13 +11,13 @@
         <img src="{{ userform.1.instance.image.url }}" alt="{% get_media_prefix %}User-Profiles/default.png"
             id="img" class="img-rounded" style="width:140px;height:140px;">
         {% endif %}
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" class="form-horizontal">
             {% csrf_token %}
             {% for form in userform %}
                 {% for field in form %}
                 {% if not field.is_hidden %}
-                <div class="row">
-                    <div class="col-md-3">{{ field.label_tag }}</div>
+                <div class="form-group">
+                    <div class="col-md-3 control-label">{{ field.label_tag }}</div>
                     <div class="col-md-9">{{ field }}
                     {% if field.help_text %}
                         <small style="color: grey">{{ field.help_text }}</small>
@@ -26,7 +26,7 @@
                         <p style="color: red">{{ error }}</p>
                     {% endfor %}
                     </div>
-                </div><br>
+                </div>
                 {% endif %}
                 {% endfor %}
             {% endfor %}
