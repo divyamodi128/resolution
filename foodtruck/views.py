@@ -32,8 +32,8 @@ class BaseTruckForm(BaseFormView):
 
     def get_initial(self):
         if not self.request.user.is_authenticated:
-            return {'user': None}
-        return {'user': self.request.user.id}
+            return None
+        return {'user': self.request.user}
 
     def get_context_data(self, **kwargs):
         context = super(BaseTruckForm, self).get_context_data(**kwargs)
@@ -86,7 +86,7 @@ class UpdateTruckView(BaseTruckForm, UpdateView):
         else:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                       {'verbose_name': queryset.model._meta.verbose_name})
-        import pdb ; pdb.set_trace()
+        # import pdb ; pdb.set_trace()
         return obj
 
 
@@ -102,7 +102,7 @@ class FormTruckView(FormView):
     success_url = '/truck/list/'
 
     def get_initial(self):
-        import pdb ; pdb.set_trace()
+        # import pdb ; pdb.set_trace()
         if not self.request.user.is_authenticated:
             return HttpResponseForbidden()
         return {'user': self.request.user.id}

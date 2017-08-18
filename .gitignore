@@ -2,9 +2,18 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Staticfiles
 /staticfiles/*
 
+# Media files/dirs
+/media/*
+
+# VisualStudio Code dirs
 .vscode/
+
+# Heroku Local Files
+Procfile.windows
 
 # C extensions
 *.so

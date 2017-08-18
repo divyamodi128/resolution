@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 SECRET_KEY = '0qf6laezi#&jn153+6l(8qb$i8#=hj-yud1m-8-%i7i@zm2#)&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['djangomaster.herokuapp.com']
 
@@ -70,9 +72,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'resolutions.wsgi.application'
-
-# During Development only
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -125,12 +124,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# During Development only
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# SendGrid Credintials
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'divtestpy@gmail.com'
+EMAIL_HOST_PASSWORD = force_text(urlsafe_base64_decode(b'RCF2eUBtMGQh'))
+EMAIL_USE_TLS = True
+
 LOGIN_REDIRECT_URL = '/truck/list/'
 
 # Only in main settings file
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "live-static-files", "static-root")
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
@@ -138,3 +147,6 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
