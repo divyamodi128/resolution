@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from resolutions.helpers import RandomFileName
+
 class Profile(models.Model):
     NONE = 'NONE'
     USER = 'USER'
@@ -18,7 +20,8 @@ class Profile(models.Model):
         ('U', 'N'),
     )
     user =        models.OneToOneField(User, on_delete=models.CASCADE)
-    image =       models.ImageField(upload_to='User-Profiles', blank=True, null=True, default='/media/User-Profiles/default.png')
+    image =       models.ImageField(upload_to=RandomFileName('User-Profiles'), blank=True, null=True, 
+                                    default='/media/User-Profiles/default.png')
     attribute =   models.CharField(max_length=13, choices=MODE_OF_USER, default=NONE)
     gender =      models.CharField(max_length=1, choices=GENDER, default='U')
     birth_date =  models.DateField(null=True, blank=True)
