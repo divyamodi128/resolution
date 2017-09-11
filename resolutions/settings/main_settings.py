@@ -128,10 +128,10 @@ USE_TZ = True
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # SendGrid Credintials
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'divtestpy@gmail.com'
-EMAIL_HOST_PASSWORD = force_text(urlsafe_base64_decode(b'RCF2eUBtMGQh'))
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = '/truck/list/'
@@ -148,5 +148,13 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-MEDIA_URL = '/media/'
+DEFAULT_MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# AWS S3 BUCKET Credentials.
+AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
+MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
