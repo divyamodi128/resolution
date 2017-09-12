@@ -12,12 +12,16 @@ from django.contrib.auth.models import User
 from core.tokens import account_activation_token
 from core.forms import SignUpForm, ProfileForm
 from core.models import Profile
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from resolutions import settings
 
 
 def get_activation_link(request, user=None):
     '''
     Function creates the activation link and
-    sends it to the user.
+    sends it to the user using Django smtp
+    mailing services.
     '''
     current_site = get_current_site(request)
     subject = 'Activate Your MySite Account'
@@ -29,6 +33,40 @@ def get_activation_link(request, user=None):
     })
     user.email_user(subject, message)
 
+def get_activation_link_sendgrid(request, user=None):
+    '''
+    Functions creates the activation link and
+    sends it to the user using SENDGRID package.
+    '''
+    if user is None:
+        return False
+    # import pdb; pdb.set_trace()
+    current_site = get_current_site(request)
+    message = render_to_string('user/account_activation_email.html', {
+        'user': user,
+        'domain': current_site.domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+    })
+    mail = EmailMultiAlternatives(
+        subject="Activate Your MySite Account",
+        body=message,
+        from_email=settings.ADMIN_EMAIL_ADDRESS,
+        to=[user.email],
+        headers={"Reply-To": "support@sendgrid.com"}
+    )
+    # Add template
+    mail.template_id = 'user/account_activation_email.html'
+
+    # Replace substitutions in sendgrid template
+    mail.substitutions = {
+        'user': user,
+        'domain': current_site.domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+    }
+    # import pdb; pdb.set_trace()
+    mail.send()
 
 def signup(request):
     if request.method == 'POST':
@@ -54,7 +92,13 @@ def signup(request):
             user.profile.gender = profileform.cleaned_data.get('gender')
             user.save()
             # Generates the email varification link
-            get_activation_link(request, user=user)
+            try:
+                get_activation_link(request, user=user)
+                print("Worked the Django Way!!")
+            except:
+                print("Trying to send mail via sendgrid module")
+                get_activation_link_sendgrid(request, user=user)
+                print("Worked!!")
             return redirect('account_activation_sent')
             # Simple Registrations
             # form.save()
