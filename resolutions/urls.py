@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     # Other apps urls
     url(r'^truck/', include('foodtruck.urls')),
+    url(r'^truck/menu/', include('menucard.urls')),
     # Unused urls
     url(r'^accounts/login/$', auth_views.LoginView.as_view()),
 ]

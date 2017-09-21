@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+    Add Your Food Truck
+{% endblock title %}    
+
+{% block content %}
+    <div class="col-md-10 col-md-offset-1">
+        {% load static %}
+        <img src="{% get_media_prefix %}Truck-Images/default.jpg" 
+             id="img" class="img-rounded" style="width:140px;height:140px;">
+        <form action="/truck/menu/create/" method="post" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            {% for field in menuFrom %}
+                {% if not field.is_hidden %}
+                    <div class="form-group">
+                        <div class="col-md-2 control-label">{{ field.label_tag }}</div>
+                        <div class="col-md-10">{{ field }}
+                        {% if field.help_text %}
+                            <small style="color: grey">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <div>{{ field }}</div>
+                {% endif %}
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-2"><input type="reset" class="btn btn-primary" value="Reset" /></div>
+                    <div class="col-md-10"><input type="submit" class="btn btn-primary" value="Submit" /></div>
+                </div>
+        </form>
+    </div>
+{% endblock content %}

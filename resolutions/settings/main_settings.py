@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'foodtruck',
     'core', # For user signup and email conformations
+    'menucard',
 ]
 
 MIDDLEWARE = [
